@@ -3,6 +3,26 @@ import { z } from 'zod';
 
 dotenv.config();
 
+const booleanFromEnv = z.preprocess((value) => {
+  if (typeof value === 'boolean') {
+    return value;
+  }
+
+  if (typeof value === 'string') {
+    const normalized = value.trim().toLowerCase();
+
+    if (['true', '1', 'yes', 'on'].includes(normalized)) {
+      return true;
+    }
+
+    if (['false', '0', 'no', 'off', ''].includes(normalized)) {
+      return false;
+    }
+  }
+
+  return value;
+}, z.boolean());
+
 const EnvSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().int().positive().default(3001),
@@ -21,13 +41,13 @@ const EnvSchema = z.object({
   EMAIL_REPLY_TO: z.string().email().default('support@freelancekg.com'),
   SMTP_HOST: z.string().optional(),
   SMTP_PORT: z.coerce.number().int().positive().default(587),
-  SMTP_SECURE: z.coerce.boolean().default(false),
+  SMTP_SECURE: booleanFromEnv.default(false),
   SMTP_USER: z.string().optional(),
   SMTP_PASS: z.string().optional(),
 
   TELEGRAM_BOT_TOKEN: z.string().optional(),
   TELEGRAM_DEFAULT_CHAT_ID: z.string().optional(),
-  TELEGRAM_POLLING_ENABLED: z.coerce.boolean().default(true),
+  TELEGRAM_POLLING_ENABLED: booleanFromEnv.default(true),
   TELEGRAM_API_BASE: z.string().url().optional(),
   TELEGRAM_LINK_SECRET: z.string().optional(),
   TELEGRAM_LINK_TTL_SECONDS: z.coerce.number().int().positive().default(900),
@@ -50,8 +70,8 @@ const EnvSchema = z.object({
   MESSAGE_RATE_LIMIT_MAX: z.coerce.number().int().positive().default(300),
   UPLOAD_RATE_LIMIT_MAX: z.coerce.number().int().positive().default(120),
 
-  ENABLE_OAUTH: z.coerce.boolean().default(true),
-  DEV_OAUTH_MOCK: z.coerce.boolean().default(true),
+  ENABLE_OAUTH: booleanFromEnv.default(true),
+  DEV_OAUTH_MOCK: booleanFromEnv.default(true),
   GOOGLE_CLIENT_ID: z.string().optional(),
   GOOGLE_CLIENT_SECRET: z.string().optional(),
   GOOGLE_CALLBACK_URL: z.string().optional(),
