@@ -9,7 +9,7 @@ services:
     healthCheckPath: /health
     envVars:
       - key: NODE_ENV
-        value: production
+        value: "production"
       - key: DATABASE_URL
         fromDatabase:
           name: freelancekg-db
@@ -31,15 +31,15 @@ services:
           name: freelancekg-web
           envVarKey: RENDER_EXTERNAL_URL
       - key: ENABLE_OAUTH
-        value: false
+        value: "false"
       - key: DEV_OAUTH_MOCK
-        value: false
+        value: "false"
       - key: PAYMENT_PROVIDER
-        value: disabled
+        value: "disabled"
       - key: TELEGRAM_POLLING_ENABLED
-        value: false
+        value: "false"
       - key: STORAGE_PROVIDER
-        value: local
+        value: "local"
       - key: EMAIL_FROM
         value: noreply@freelancekg.kg
       - key: EMAIL_REPLY_TO
