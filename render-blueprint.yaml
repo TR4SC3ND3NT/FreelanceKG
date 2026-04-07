@@ -4,8 +4,8 @@ services:
     runtime: node
     plan: free
     rootDir: server
-    buildCommand: npm ci --include=dev && npm run db:generate && npm run build
-    startCommand: npm run db:migrate:prod && npm run start
+    buildCommand: npm ci --include=dev && npm run db:generate && npm run build && npm run db:migrate:prod
+    startCommand: npm run start
     healthCheckPath: /health
     envVars:
       - key: NODE_ENV
