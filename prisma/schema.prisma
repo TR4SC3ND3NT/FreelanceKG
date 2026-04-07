@@ -1,0 +1,161 @@
+// FreelanceKG Prisma Schema
+// Фриланс платформа для Кыргызстана с эскроу системой
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum UserRole {
+  CLIENT
+  FREELANCER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING     // Ожидает исполнителя
+  ACTIVE      // В работе
+  SUBMITTED   // Работа сдана на проверку
+  COMPLETED   // Завершён
+  DISPUTED    // Спор
+  CANCELLED   // Отменён
+}
+
+enum DisputeStatus {
+  OPEN
+  RESOLVED
+}
+
+// ============================================
+// MODELS
+// ============================================
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String   // bcrypt hashed
+  name      String
+  avatar    String?
+  role      UserRole @default(FREELANCER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  freelancerProfile FreelancerProfile?
+  clientOrders      Order[]            @relation("ClientOrders")
+  freelancerOrders  Order[]            @relation("FreelancerOrders")
+  sentMessages      Message[]          @relation("SentMessages")
+  reviewsGiven      Review[]           @relation("ReviewsGiven")
+  reviewsReceived   Review[]           @relation("ReviewsReceived")
+  disputesOpened    Dispute[]          @relation("DisputesOpened")
+
+  @@map("users")
+}
+
+model FreelancerProfile {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  bio             String?  @db.Text
+  skills          String[] // Массив навыков: ["JavaScript", "React", "Node.js"]
+  hourlyRate      Float?   // Почасовая ставка в сомах
+  category        String?  // Категория: "Веб-разработка", "Дизайн", etc.
+  portfolio       Json?    // JSON с портфолио проектами
+  rating          Float    @default(0) // Средний рейтинг 0-5
+  completedOrders Int      @default(0) // Количество завершённых заказов
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("freelancer_profiles")
+}
+
+model Order {
+  id           String      @id @default(cuid())
+  clientId     String
+  freelancerId String?
+  title        String
+  description  String      @db.Text
+  budget       Float       // Бюджет в сомах
+  status       OrderStatus @default(PENDING)
+  escrowAmount Float       @default(0) // Сумма в эскроу
+  deadline     DateTime?   // Дедлайн
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  // Relations
+  client     User      @relation("ClientOrders", fields: [clientId], references: [id], onDelete: Cascade)
+  freelancer User?     @relation("FreelancerOrders", fields: [freelancerId], references: [id], onDelete: SetNull)
+  messages   Message[]
+  reviews    Review[]
+  disputes   Dispute[]
+
+  @@index([clientId])
+  @@index([freelancerId])
+  @@index([status])
+  @@map("orders")
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  orderId   String
+  senderId  String
+  content   String   @db.Text
+  fileUrl   String?  // URL загруженного файла
+  createdAt DateTime @default(now())
+
+  // Relations
+  order  Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  sender User  @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([senderId])
+  @@map("messages")
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  orderId   String
+  fromId    String   // Кто оставил отзыв
+  toId      String   // Кому отзыв
+  rating    Int      @default(5) // Рейтинг 1-5
+  comment   String?  @db.Text
+  createdAt DateTime @default(now())
+
+  // Relations
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  from  User  @relation("ReviewsGiven", fields: [fromId], references: [id], onDelete: Cascade)
+  to    User  @relation("ReviewsReceived", fields: [toId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([toId])
+  @@map("reviews")
+}
+
+model Dispute {
+  id         String        @id @default(cuid())
+  orderId    String
+  openedById String        // Кто открыл спор
+  reason     String        @db.Text // Причина спора
+  status     DisputeStatus @default(OPEN)
+  resolution String?       @db.Text // Решение спора
+  createdAt  DateTime      @default(now())
+  resolvedAt DateTime?
+
+  // Relations
+  order    Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  openedBy User  @relation("DisputesOpened", fields: [openedById], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([status])
+  @@map("disputes")
+}

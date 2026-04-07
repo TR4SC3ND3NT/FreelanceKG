@@ -1,0 +1,102 @@
+WORKLOG (prompt -> action, short)
+
+1) Prompt: Сделать фронт премиальным, брутальным, в стиле дорогого SaaS, без миграции на Next.js.
+   Action: Проведена инвентаризация фронта; обновлены глобальные токены, UI-kit, shell-компоненты, Landing/Profile/Dashboard; сохранена Vite+React архитектура.
+
+2) Prompt: Подготовить точное описание фронта/логики проекта для другого ИИ (без доступа к репо).
+   Action: Сформирован структурный product/front brief: страницы, роли, флоу, API-контракты, что генерить в верстке и как потом интегрировать.
+
+3) Prompt: Уточнение, что у другого ИИ нет доступа к проекту.
+   Action: Описание переформатировано в self-contained формат (контекст + требования + ожидаемый output без ссылок на локальный код).
+
+4) Prompt: По скриншоту сделать везде жесткий брутальный dark-дизайн.
+   Action: Выполнен глобальный редизайн: navbar/sidebar/topbar/cards/tables/buttons/typography/skeleton/empty states приведены к единому темному стилю.
+
+5) Prompt: Подкрутить цвета, потому что слишком ярко.
+   Action: Ослаблены акценты, приглушены primary/status цвета, уменьшены glow/gradient, гармонизированы поверхности.
+
+6) Prompt: Описать идею приложения и как оно работает для оценки жизнеспособности.
+   Action: Подготовлен полный текстовый product brief + реальный end-to-end flow + что уже работает + где риски для production.
+
+7) Prompt: Поставить базу #161616 и сделать гармонию брутальных цветов.
+   Action: Палитра привязана к #161616, переработаны bg/surface/border/text/primary/ring/shadows, кнопки подстроены под новую гамму.
+
+8) Prompt: Внести ВСЕ запросы в Worklog.txt и проверить Telegram deep-link /start, кнопку и логику бота.
+   Action: Создан этот Worklog.txt; Telegram интеграция доработана:
+   - добавлены backend endpoints: GET /api/auth/telegram/status и DELETE /api/auth/telegram/link;
+   - в настройках Telegram теперь: статус привязки, свежая генерация deep-link по клику, кнопки перепривязки/проверки/отвязки;
+   - в топбар добавлена быстрая кнопка Telegram;
+   - улучшена логика бота: корректная реакция на /start без payload, автовключение telegram-notifications после привязки, fallback chat ограничен dev-средой.
+
+9) Prompt: “Все что я сказал щас все сделай полностью” (enterprise-апгрейд по архитектуре/финансам/операциям + не ломать проект).
+   Action:
+   - Добавлен enterprise data-layer в Prisma:
+     `Proposal`, `SupportCase`, `AuditLog`, `DisputeEvent`, `LedgerEntry`, `IdempotencyKey` + новые enum’ы.
+   - Создана миграция: `server/prisma/migrations/20260224125410_enterprise_foundation`.
+   - Внедрён RBAC-расширенный набор permissions (`proposals.*`, `cases.*`, `ledger.read` и др.).
+   - Добавлены фичефлаги: `proposals.enabled`, `support_cases.enabled`, `ledger.enabled`.
+   - Реализованы новые backend-модули:
+     - `server/src/lib/ledger.ts` (двойная запись, балансировка debit/credit);
+     - `server/src/lib/idempotency.ts` (идемпотентные операции с хранением ответа).
+   - Платежная логика переведена на ledger-проводки:
+     - escrow hold / confirm, escrow release, escrow refund, withdrawal request.
+   - Усилена идемпотентность критичных операций:
+     - вывод средств,
+     - админские resolve dispute (refund/release),
+     - resolve dispute в основном disputes API.
+   - Расширен disputes:
+     - timeline событий (`DisputeEvent`) в выдаче спора,
+     - endpoint добавления доказательств: `POST /api/disputes/:id/evidence`.
+   - Добавлены proposals в orders:
+     - `GET /api/orders/:id/proposals`,
+     - `POST /api/orders/:id/proposals`,
+     - `POST /api/orders/:id/proposals/:proposalId/accept|reject`.
+   - Добавлен case management API:
+     - `POST /api/cases`,
+     - `GET /api/cases/my`,
+     - `GET /api/cases` (admin/ops),
+     - `PATCH /api/cases/:id/assign`,
+     - `PATCH /api/cases/:id/status`.
+   - Добавлены admin endpoints:
+     - `GET /api/admin/audit-logs`,
+     - `GET /api/admin/ledger`.
+   - Добавлен request-id middleware (`x-request-id`) и прокинут в error/http logging.
+   - Front API client (`src/services/api.ts`) расширен под proposals/cases/audit/ledger + idempotency headers.
+   - Проверка целостности: `npm run build` (frontend) и `npm run build` (server) — успешно.
+
+10) Prompt: “Довести до состояния запуска с нуля + закрыть типичные дыры (миграции, req.user, idempotency, ledger summary, permissions, audit context)”.
+    Action:
+    - Миграции реально применены в БД: `npx prisma migrate dev`; статус: schema up to date.
+    - Повторно выполнен `npx prisma generate`.
+    - Упорядочена типизация request user:
+      - убран legacy-паттерн `(req as any).user` по `server/src`,
+      - приведено к `req.user!` в protected flow,
+      - `Express.User` и `Express.Request` синхронизированы в `server/src/types/express.d.ts`.
+    - Улучшен audit trail:
+      - расширен `auditLog` (actorRole/ip/userAgent/requestId),
+      - добавлен `auditLogFromRequest(req, ...)`,
+      - ключевые admin/cases/disputes/payments/proposals действия переведены на контекстный audit.
+    - Усилен ledger:
+      - в `postLedgerBatch` введено обязательное требование `referenceType + referenceId`,
+      - добавлен endpoint `GET /api/admin/ledger-summary` (агрегаты debit/credit/net по account).
+    - Исправлена фронтовая идемпотентность:
+      - в `src/services/api.ts` добавлен стабильный key-store idempotency (повторные retry используют тот же ключ),
+      - убраны одноразовые ключи на `Date.now()` для dispute resolve,
+      - withdrawal по умолчанию использует стабильный scope-key.
+    - Добавлена загрузка permissions во frontend auth state:
+      - `GET /auth/permissions` обёрнут в API-client (`getAuthPermissions`),
+      - `AuthContext` теперь хранит `permissions` и `hasPermission`.
+    - Добавлен ops-документ: `docs/enterprise.md` (RBAC/flags/idempotency/audit/ledger/cases/workflow/proposals).
+    - Финальная проверка: `npm run build` (server) и `npm run build` (frontend) — успешно.
+
+11) Prompt: Сделать рабочий post-login UX, убрать пустой dashboard, довести роуты и стабильность до production-ready.
+    Action:
+    - Роутинг: /dashboard -> role home; добавлен канонический /workspace; внедрён RequireGuest для /login и /register.
+    - Навигация: topbar/navbar/страницы возврата (Order/Dispute/NotFound/CreateOrder) переведены на единый workspace flow.
+    - Client Orders: добавлены рекомендации фрилансеров + фильтр по категориям + first-order empty state с 2 CTA.
+    - Freelancer Market: добавлены quick filters и блок "orders of the day".
+    - Backend: исправлен Prisma relation filter в /api/freelancers (формат is:{...}), устранена ошибка Unknown argument rating.
+    - Error handling backend: добавлена нормализация Prisma-ошибок, raw stack/details больше не отдаются пользователю.
+    - UI copy: sidebar group finance переименована в более читабельные названия (Money/Платежи/Төлөмдөр).
+    - TypeScript blocker: исправлен Button (framer-motion typing), закрыт конфликт onDrag.
+    - Проверки: frontend tsc/build и server typecheck/build — успешно.

@@ -1,0 +1,897 @@
+{
+  "language": {
+    "label": "Language",
+    "ru": "RU",
+    "en": "EN",
+    "ky": "KY"
+  },
+  "navbar": {
+    "freelancers": "Freelancers",
+    "howItWorks": "How it works",
+    "categories": "Categories",
+    "login": "Login",
+    "register": "Sign up",
+    "profile": "My profile",
+    "dashboard": "Dashboard",
+    "logout": "Logout"
+  },
+  "footer": {
+    "description": "Secure freelance platform for Kyrgyzstan. Connecting specialists and clients through escrow.",
+    "platform": "Platform",
+    "support": "Support",
+    "about": "About",
+    "howItWorks": "How it works",
+    "categories": "Categories",
+    "blog": "Blog",
+    "help": "Help",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "terms": "Terms",
+    "copyright": "© 2026 FreelanceKG. All rights reserved"
+  },
+  "common": {
+    "loading": "Loading...",
+    "back": "Back",
+    "cancel": "Cancel",
+    "save": "Save",
+    "open": "Open",
+    "create": "Create",
+    "retry": "Retry",
+    "remove": "Remove",
+    "refresh": "Refresh",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "messages": "Messages",
+    "profile": "Profile",
+    "orders": "Orders",
+    "finance": "Finance",
+    "notifications": "Notifications",
+    "documents": "Documents",
+    "resume": "Resume",
+    "safeDeal": "Safe deal",
+    "escrowProtection": "Escrow protection",
+    "active": "Active",
+    "completed": "Completed",
+    "inEscrow": "In escrow",
+    "spent": "Spent",
+    "earned": "Earned",
+    "available": "Available",
+    "pending": "Pending",
+    "status": "Status",
+    "actions": "Actions",
+    "date": "Date",
+    "amount": "Amount",
+    "type": "Type",
+    "search": "Search",
+    "allStatuses": "All statuses",
+    "empty": "No data"
+  },
+  "categories": {
+    "development": "Development",
+    "design": "Design",
+    "marketing": "Marketing",
+    "copywriting": "Copywriting",
+    "video": "Video",
+    "translation": "Translation"
+  },
+  "auth": {
+    "loginWithGoogle": "Continue with Google",
+    "loginWithGithub": "Continue with GitHub",
+    "loginTitle": "Sign in",
+    "registerTitle": "Sign up",
+    "loginSubtitle": "Secure freelance platform for Kyrgyzstan",
+    "registerSubtitle": "Create an account and get started",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "name": "Name",
+    "loginButton": "Sign in",
+    "registerButton": "Create account",
+    "loggingIn": "Signing in...",
+    "registering": "Signing up...",
+    "forgot": "Forgot password?",
+    "noAccount": "No account?",
+    "hasAccount": "Already have an account?",
+    "toRegister": "Sign up",
+    "toLogin": "Sign in",
+    "or": "or",
+    "roleTitle": "Choose role",
+    "roleClient": "I am a client",
+    "roleFreelancer": "I am a freelancer",
+    "termsPrefix": "By registering, you agree to",
+    "and": "and",
+    "terms": "terms of use",
+    "privacy": "privacy policy",
+    "placeholderEmail": "example@mail.kg",
+    "placeholderPassword": "••••••••",
+    "placeholderName": "Your name",
+    "placeholderNewPassword": "Minimum 8 characters",
+    "placeholderConfirmPassword": "Repeat password",
+    "errors": {
+      "fillAll": "Please fill all fields",
+      "roleRequired": "Please choose a role",
+      "passwordMismatch": "Passwords do not match",
+      "passwordLength": "Password must be at least 8 characters",
+      "passwordComplexity": "Password must include lower, upper letters and a number"
+    },
+    "loginFailed": "Login failed",
+    "registerFailed": "Registration failed",
+    "sessionCheck": "Checking session..."
+  },
+  "landing": {
+    "heroTitle": "Find freelancers or jobs with secure escrow",
+    "heroSubtitle": "FreelanceKG is a marketplace with a clear flow for non-technical users.",
+    "tabFindFreelancer": "Find talent",
+    "tabFindOrder": "Find jobs",
+    "searchPlaceholderFreelancer": "Example: React, UI/UX, ads specialist",
+    "searchPlaceholderOrder": "Example: web, design, marketing",
+    "searchButton": "Start search",
+    "marketWithoutLogin": "You can browse orders and profiles without login.",
+    "ordersOfDay": "Orders of the day",
+    "marketOpen": "Market is open without login",
+    "respond": "Apply",
+    "budget": "Budget",
+    "popularCategories": "Popular categories",
+    "allCategories": "All categories",
+    "topFreelancers": "Top freelancers",
+    "viewMarket": "View market",
+    "howEscrowWorks": "How escrow works",
+    "escrowSubtitle": "Main protection: funds are held until acceptance.",
+    "escrowMore": "Learn more",
+    "escrowActive": "Escrow protection is active for every deal",
+    "ctaTitle": "Ready to start safely?",
+    "ctaSubtitle": "Create a profile, publish orders and close deals with transparent payment status.",
+    "ctaRegister": "Sign up",
+    "ctaFreelancers": "Browse freelancers",
+    "metrics": {
+      "freelancers": "Freelancers",
+      "orders": "Orders",
+      "clients": "Clients",
+      "escrowDeals": "Escrow deals"
+    },
+    "heroTitlePart1": "Find freelancers or jobs",
+    "heroTitlePart2": "with secure escrow deals",
+    "localPlatform": "Platform for Kyrgyzstan",
+    "specialists": "specialists",
+    "ordersCount": "orders",
+    "perHour": "hour",
+    "profile": "Profile",
+    "noCategory": "No category",
+    "today": "Today",
+    "escrowSteps": {
+      "createTitle": "Client creates an order",
+      "createText": "Terms and budget are fixed before work starts.",
+      "holdTitle": "Funds are held in escrow",
+      "holdText": "Freelancer sees funds are reserved.",
+      "releaseTitle": "Release after approval",
+      "releaseText": "Funds are released only after acceptance."
+    },
+    "fallbackOrders": {
+      "logisticsLandingTitle": "Landing page for logistics company",
+      "mobileRedesignTitle": "Mobile app redesign",
+      "adsManagementTitle": "Target ads management"
+    }
+  },
+  "dashboard": {
+    "client": {
+      "title": "Client dashboard",
+      "subtitle": "Manage orders, escrow payments and deal statuses.",
+      "quickActions": "Quick actions",
+      "activeOrders": "Active orders overview",
+      "latestTransactions": "Latest transactions",
+      "newOrder": "New order",
+      "allOrders": "All my orders",
+      "openMessages": "Open messages",
+      "financeCenter": "Finance center",
+      "notifications": "Notifications",
+      "loadFailed": "Failed to load dashboard",
+      "noCategory": "No category",
+      "ordersEmpty": "No orders yet",
+      "ordersEmptyHint": "Create your first order to start escrow workflow.",
+      "transactionsEmpty": "No transactions yet",
+      "transactionsEmptyHint": "History will appear after first escrow operations.",
+      "escrowTrust": "All platform deals are escrow-protected until acceptance.",
+      "escrowStep1": "1. Budget hold",
+      "escrowStep2": "2. Work in progress",
+      "escrowStep3": "3. Approval and payout"
+    },
+    "freelancer": {
+      "title": "Workspace",
+      "subtitle": "Track contracts, payouts and market opportunities.",
+      "focusOrders": "Focus: my active orders",
+      "marketOrders": "Market: new available orders",
+      "activityFeed": "Activity feed",
+      "escrowSummary": "Escrow summary",
+      "quickActions": "Quick actions",
+      "openAll": "Open all",
+      "marketAll": "Full market",
+      "loadFailed": "Failed to load dashboard",
+      "editProfile": "Edit profile",
+      "noCategory": "No category",
+      "noMyOrders": "No active orders yet",
+      "noMyOrdersHint": "Pick one from marketplace to start.",
+      "noMarketOrders": "No available orders yet",
+      "noMarketOrdersHint": "New jobs will appear after client publications.",
+      "noActivity": "No activity yet.",
+      "escrowHint": "Only financially confirmed orders are shown to you.",
+      "escrowStep1": "1. Order is payment-confirmed",
+      "escrowStep2": "2. Submit result and acceptance",
+      "escrowStep3": "3. Release payout after approval",
+      "openFinance": "Open finance"
+    },
+    "messages": {
+      "title": "Messages",
+      "unread": "Unread messages",
+      "empty": "No conversations yet.",
+      "loading": "Loading conversations...",
+      "interlocutor": "Interlocutor",
+      "loadFailed": "Failed to load messages"
+    },
+    "settings": {
+      "title": "Settings & security",
+      "subtitle": "Manage account security and finance parameters.",
+      "security": "Security",
+      "finance": "Finance",
+      "devices2fa": "Devices & 2FA",
+      "securityHint": "Use a strong password and enable 2FA for production.",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Repeat new password",
+      "updatePassword": "Update password",
+      "twoFactor": "Two-factor authentication",
+      "twoFactorHint": "Protect login with an additional code.",
+      "twoFactorEnabled": "2FA enabled",
+      "enableTwoFactor": "Enable 2FA",
+      "loginAlerts": "Login alerts",
+      "loginAlertsHint": "Send alerts when signing in from a new device.",
+      "alertsEnabled": "Alerts enabled",
+      "enableAlerts": "Enable alerts",
+      "activeSessions": "Active sessions",
+      "currentSession": "• Firefox / Linux / Bishkek (current)",
+      "mobileSession": "• Mobile App / Android / Bishkek (2 days ago)",
+      "sessionsCleared": "All other sessions were terminated",
+      "closeOtherSessions": "Close all sessions except current",
+      "loadingFinance": "Loading financial data...",
+      "rating": "Rating",
+      "withdrawAmount": "Withdrawal amount",
+      "withdrawDetails": "Payout details",
+      "submittingWithdraw": "Submitting...",
+      "withdraw": "Withdraw",
+      "latestTransactions": "Latest transactions",
+      "goToProfileEdit": "Go to profile editing",
+      "goToProfile": "Go to profile",
+      "financeLoadFailed": "Failed to load financial data",
+      "errors": {
+        "fillAllFields": "Fill in all fields",
+        "passwordMismatch": "New password and confirmation do not match",
+        "passwordTooShort": "New password must be at least 8 characters",
+        "passwordUpdateFailed": "Failed to update password",
+        "withdrawMin": "Minimum withdrawal amount is 1000 som",
+        "withdrawDetailsRequired": "Enter payout details",
+        "withdrawCreateFailed": "Failed to create withdrawal request"
+      }
+    }
+  },
+  "orders": {
+    "create": {
+      "title": "Create order",
+      "subtitle": "Publish task, lock budget and enable escrow before work starts.",
+      "clientFallback": "Client",
+      "stepDetails": "Order details",
+      "stepEscrow": "Escrow",
+      "stepDone": "Done",
+      "detailsSection": "Order details",
+      "orderTitle": "Order title",
+      "orderTitlePlaceholder": "Example: Mobile app development",
+      "category": "Category",
+      "categoryPlaceholder": "Select category",
+      "description": "Description / Technical brief",
+      "descriptionPlaceholder": "Describe the task, requirements and expected result in detail",
+      "deadline": "Deadline",
+      "budget": "Budget (som)",
+      "next": "Next",
+      "escrowTitle": "Escrow protection",
+      "escrowSubtitle": "Safe deal for both sides",
+      "escrowDescription": "Funds are held on the platform and transferred to freelancer only after your quality confirmation.",
+      "paymentMethod": "Escrow payment method",
+      "paymentMethodsLoading": "Loading methods...",
+      "paymentMethodsUnavailable": "Methods unavailable",
+      "methodFeeWithCommission": "(fee {{fee}}%)",
+      "methodFeeNoCommission": "(no fee)",
+      "methodDetails": "Method fee: {{fee}}% • Currency: {{currencies}}",
+      "escrowFlow": {
+        "frozenTitle": "Held",
+        "frozenSubtitle": "Funds in escrow",
+        "confirmedTitle": "Confirmed",
+        "confirmedSubtitle": "Work accepted",
+        "paidTitle": "Paid",
+        "paidSubtitle": "Freelancer received"
+      },
+      "agreementPrefix": "I understand how escrow works and agree to deposit",
+      "agreementSuffix": "to the protected account.",
+      "confirmOrder": "Confirm order",
+      "creating": "Creating...",
+      "created": "Order created",
+      "createdAssigned": "Order created, freelancer assigned, escrow paid successfully.",
+      "createdPublished": "Order published, escrow paid successfully.",
+      "escrowTransaction": "Escrow transaction",
+      "inEscrow": "{{amount}} in escrow",
+      "goToOrder": "Go to order",
+      "toDashboard": "To dashboard",
+      "selectedFreelancerHint": "Freelancer will be assigned right after escrow payment:",
+      "selectedFreelancerFallback": "Selected freelancer",
+      "summaryTitle": "Your order",
+      "summaryTitlePlaceholder": "Title is not set yet",
+      "summaryCategoryPlaceholder": "Category is not selected",
+      "deadlineLabel": "Deadline",
+      "deadlineMissing": "not set",
+      "checklist": "Escrow checklist",
+      "checklistProgress": "Completion progress: {{current}}/{{total}}. Verify key fields before publishing.",
+      "checklistItems": {
+        "titleCategory": "Title and category",
+        "description": "Task description",
+        "deadline": "Deadline",
+        "budget": "Budget from 500 som",
+        "paymentMethod": "Payment method",
+        "escrowAgreement": "Escrow agreement"
+      },
+      "checklistDone": "OK",
+      "checklistPending": "...",
+      "escrowActiveTitle": "Escrow protection active",
+      "escrowActiveText": "Funds stay reserved until acceptance. This lowers risk for both client and freelancer.",
+      "paymentMethodNames": {
+        "card": "Bank card",
+        "elsom": "Elsom",
+        "odengi": "O!Money",
+        "mbank": "MBank"
+      },
+      "validation": {
+        "titleRequired": "Enter order title",
+        "titleMin": "Title must be at least 5 characters",
+        "categoryRequired": "Select a category",
+        "descriptionRequired": "Enter order description",
+        "descriptionMin": "Description must be at least 20 characters",
+        "deadlineRequired": "Set a deadline",
+        "deadlineMin": "Deadline must be at least tomorrow",
+        "budgetRequired": "Set a budget",
+        "budgetMin": "Minimum budget: 500 som",
+        "escrowPaymentFailed": "Escrow was not paid during order creation",
+        "createFailed": "Failed to create order"
+      }
+    },
+    "details": {
+      "title": "Order",
+      "subtitle": "All order and escrow actions are tracked in one place.",
+      "chat": "Order chat",
+      "noMessages": "No messages yet.",
+      "chatLocked": "Chat is locked: order has a final status.",
+      "inputPlaceholder": "Type a message...",
+      "inputLocked": "Messages are disabled for this order status",
+      "parties": "Deal parties",
+      "client": "Client",
+      "freelancer": "Freelancer",
+      "escrowPanel": "Escrow panel",
+      "escrowActive": "Escrow is active",
+      "openDispute": "Open dispute",
+      "completed": "Order completed",
+      "loadFailed": "Failed to load order",
+      "notFound": "Order not found",
+      "backToDashboard": "Back to dashboard",
+      "you": "You",
+      "typing": "is typing...",
+      "sendFailed": "Failed to send message",
+      "actionFailed": "Action failed",
+      "budget": "Budget",
+      "escrow": "Escrow",
+      "cancelReason": "Cancelled by client",
+      "cancelOrder": "Cancel order",
+      "acceptOrder": "Accept order",
+      "submitNote": "Work is ready for review",
+      "submitWork": "Submit work",
+      "approveWork": "Approve work",
+      "notAssigned": "Not assigned yet",
+      "escrowHint": "Funds are released only after approval or dispute resolution.",
+      "flow": {
+        "hold": "1. Budget is reserved",
+        "work": "2. Work is in progress",
+        "release": "3. Approval and release"
+      },
+      "needEscalation": "Need escalation?",
+      "escalationHint": "If there is a dispute, open a case and attach evidence.",
+      "completedHint": "Deal is closed, chat is read-only."
+    },
+    "market": {
+      "title": "Available orders",
+      "subtitle": "Marketplace feed of new orders.",
+      "take": "Take",
+      "details": "Details",
+      "loadFailed": "Failed to load market orders",
+      "takeFailed": "Failed to accept order",
+      "searchPlaceholder": "Search by title, description or category",
+      "paymentConfirmed": "Payment confirmed",
+      "noCategory": "No category",
+      "loading": "Loading market orders...",
+      "emptyTitle": "No matching orders",
+      "emptyDescription": "Try resetting filters or refresh later."
+    },
+    "my": {
+      "title": "My orders",
+      "subtitle": "Full history of your orders.",
+      "filtered": "Filtered",
+      "total": "Total",
+      "loadFailed": "Failed to load orders",
+      "noCategory": "No category",
+      "noDeadline": "Not set",
+      "searchPlaceholder": "Search by title, category or client",
+      "searchPlaceholderClient": "Search by title, category or freelancer",
+      "emptyTitle": "No orders found",
+      "emptyDescription": "Adjust filters or search settings.",
+      "emptyDescriptionClient": "Create your first order to start getting offers."
+    }
+  },
+  "dispute": {
+    "title": "Open dispute",
+    "subtitle": "Create a case and attach evidence.",
+    "warningTitle": "Attention",
+    "warningText": "Opening a dispute is a serious step. Try to solve it via chat first.",
+    "reason": "Dispute reason",
+    "reasonPlaceholder": "Describe what went wrong in detail.",
+    "evidence": "Evidence",
+    "uploadClick": "Click to upload",
+    "submit": "Open dispute",
+    "submitting": "Submitting...",
+    "opened": "Dispute opened",
+    "reviewTime": "Typical review time: up to 48 hours",
+    "loadFailed": "Failed to load order",
+    "reasonRequired": "Please describe dispute reason",
+    "orderIdMissing": "Order ID not found",
+    "openFailed": "Failed to open dispute",
+    "statusInReview": "In review",
+    "statusDraft": "Draft",
+    "backToOrder": "Back to order",
+    "openedHint": "Case is created and sent for moderation review. Funds stay in escrow until resolution.",
+    "fileRules": "PNG, JPG, PDF up to 10MB",
+    "orderInfo": "Order information",
+    "timeline": {
+      "step1": "1. Case created and accepted",
+      "step2": "2. Evidence review of both parties",
+      "step3": "3. Decision and escrow transfer"
+    },
+    "finalHint": "After dispute opening, payout actions are blocked until final moderation decision."
+  },
+  "chat": {
+    "attach": "Attach file",
+    "dropHint": "Drop files here",
+    "sending": "Sending...",
+    "sent": "Sent",
+    "failed": "Send failed",
+    "retry": "Retry",
+    "remove": "Remove",
+    "preview": "Preview",
+    "fileTooLarge": "File is too large",
+    "fileTypeNotAllowed": "File type is not allowed",
+    "file": "File"
+  },
+  "finance": {
+    "client": {
+      "title": "Finance center",
+      "subtitle": "Control spending, escrow reserves and payment operations across all orders.",
+      "badgeEscrow": "Escrow protected",
+      "badgeFinance": "Client finance",
+      "loadFailed": "Failed to load finance center",
+      "activeDeals": "Active deals",
+      "closedDeals": "Closed deals",
+      "history": "Payment history",
+      "loadingTransactions": "Loading transactions...",
+      "emptyTitle": "No transactions yet",
+      "emptyDescription": "History will appear after first orders and escrow operations.",
+      "escrowLifecycle": "Escrow lifecycle",
+      "lifecycleStep1": "1. Top up and reserve budget",
+      "lifecycleStep2": "2. Complete task and submit result",
+      "lifecycleStep3": "3. Confirm and release payment",
+      "topUpTitle": "Top up",
+      "topUpAmount": "Top-up amount",
+      "topUpAction": "Top up balance",
+      "topUpMin": "Minimum top-up amount is 500 som",
+      "topUpRequested": "Top-up request for {{amount}} via {{method}} accepted.",
+      "cardFallback": "Card"
+    },
+    "freelancer": {
+      "title": "Finance",
+      "subtitle": "Balance, escrow, withdrawals and transaction history in one place.",
+      "badgePayout": "Secure payouts",
+      "badgeCenter": "Escrow center",
+      "loadFailed": "Failed to load financial data",
+      "history": "Transaction history",
+      "loadingTransactions": "Loading transactions...",
+      "emptyTitle": "No transactions yet",
+      "emptyDescription": "History will appear after first completed deals.",
+      "paymentDetails": "Payment details",
+      "paymentDetailsHint": "Manage payout methods. Replace this block with payout CRUD API in production.",
+      "methodFee": "Fee: {{fee}}%",
+      "withdrawTitle": "Withdraw funds",
+      "withdrawAmount": "Withdrawal amount",
+      "withdrawDetails": "Details",
+      "withdrawing": "Submitting...",
+      "requestWithdraw": "Request withdrawal",
+      "withdrawMin": "Minimum withdrawal amount is 1000 som",
+      "withdrawDetailsRequired": "Provide withdrawal details",
+      "withdrawCreateFailed": "Failed to create withdrawal request",
+      "modelTitle": "Financial model",
+      "modelStep1": "1. Client pays order into escrow",
+      "modelStep2": "2. After acceptance funds are added to balance",
+      "modelStep3": "3. Withdrawals go through verified channels"
+    }
+  },
+  "profile": {
+    "common": {
+      "avatar": "Avatar",
+      "avatarAlt": "Avatar",
+      "uploadAvatar": "Upload avatar",
+      "saving": "Saving...",
+      "unknown": "Unknown",
+      "nameMin": "Name must contain at least 2 characters"
+    },
+    "client": {
+      "title": "My profile",
+      "subtitle": "Configure your name and avatar so freelancers see up-to-date info.",
+      "loadFailed": "Failed to load profile",
+      "avatarUpdated": "Avatar updated",
+      "avatarUpdateFailed": "Failed to update avatar",
+      "profileUpdated": "Profile updated",
+      "profileUpdateFailed": "Failed to update profile",
+      "accountData": "Account data",
+      "registeredAt": "Registration date",
+      "company": "Company",
+      "companyPlaceholder": "Company name",
+      "companySite": "Company website",
+      "companySitePlaceholder": "https://example.kg",
+      "phone": "Contact phone",
+      "phonePlaceholder": "+996 ...",
+      "activeOrders": "Active orders",
+      "goMessages": "Go to messages",
+      "goSettings": "Open settings and payments",
+      "companyProfile": "Company profile",
+      "companyProfileHint": "This block builds trust for freelancers. In production it should use a separate organization API."
+    },
+    "freelancer": {
+      "title": "My profile",
+      "subtitle": "Manage public info, rate and skills.",
+      "loadFailed": "Failed to load profile",
+      "avatarUpdated": "Avatar updated",
+      "avatarUpdateFailed": "Failed to upload avatar",
+      "bioMin": "Bio must contain at least 10 characters",
+      "rateNumber": "Hourly rate must be a number",
+      "profileSaved": "Profile saved",
+      "profileSaveFailed": "Failed to save profile",
+      "publicData": "Public data",
+      "hourlyRate": "Hourly rate (som)",
+      "hourlyRatePlaceholder": "Example: 1200",
+      "skills": "Skills (comma-separated)",
+      "skillsPlaceholder": "React, TypeScript, UI/UX",
+      "bio": "Bio",
+      "bioPlaceholder": "Tell about your experience",
+      "verification": "Verification",
+      "verificationHint": "Email is verified. Add phone and documents in resume section to increase trust.",
+      "securityHint": "Configure password, login alerts and additional protection settings in security center.",
+      "securityCenter": "Security center"
+    }
+  },
+  "freelancersPage": {
+    "title": "Find freelancer",
+    "subtitle": "Browse freelancer marketplace without login. Escrow-safe order creation is available after sign in.",
+    "searchPlaceholder": "Search by name or skills",
+    "filters": "Filters",
+    "reset": "Reset",
+    "allCategories": "All categories",
+    "minRating": "Minimum rating",
+    "all": "All",
+    "priceRange": "Price (som/hour)",
+    "found": "Found",
+    "readOnly": "Read-only without login",
+    "loading": "Loading freelancers...",
+    "loadFailed": "Failed to load freelancers list",
+    "emptyTitle": "Nothing found",
+    "emptyDescription": "Try changing filters or search query.",
+    "openProfile": "Open profile",
+    "columns": {
+      "freelancer": "Freelancer",
+      "skills": "Skills",
+      "rate": "Rate",
+      "rating": "Rating"
+    }
+  },
+  "freelancerProfile": {
+    "loading": "Loading profile...",
+    "loadFailed": "Failed to load profile",
+    "notFound": "Freelancer not found",
+    "backToList": "← Back to list",
+    "verified": "Verified",
+    "rating": "Rating",
+    "completedOrders": "Completed orders",
+    "online": "Online",
+    "recentlyOnline": "Recently online",
+    "tabs": {
+      "about": "About",
+      "portfolio": "Portfolio",
+      "reviews": "Reviews ({{count}})"
+    },
+    "aboutTitle": "About specialist",
+    "noDescription": "Description is not added yet.",
+    "skills": "Skills",
+    "noPortfolio": "No published works yet.",
+    "noPreview": "No preview",
+    "project": "Project",
+    "noProjectDescription": "No description",
+    "noReviews": "No reviews yet.",
+    "noComment": "No comment",
+    "recently": "Recently",
+    "startCooperation": "Start cooperation",
+    "startHint": "Create escrow-protected order and lock budget before start.",
+    "discussProject": "Discuss project",
+    "escrowPayment": "Escrow payment protection",
+    "escrowPaymentHint": "Payment is reserved by the platform and released only after result approval."
+  },
+  "aboutPage": {
+    "title": "About us",
+    "subtitle": "FreelanceKG is a local platform for safe collaboration between clients and freelancers in Kyrgyzstan",
+    "cards": {
+      "history": {
+        "title": "Platform history",
+        "text": "FreelanceKG started as a local initiative to simplify hiring and make deals transparent."
+      },
+      "mission": {
+        "title": "Our mission",
+        "text": "We build a secure ecosystem with escrow mechanics where both sides are protected by clear rules."
+      },
+      "team": {
+        "title": "Team",
+        "text": "The product is developed by engineers, designers and support specialists with marketplace and fintech experience."
+      }
+    },
+    "whatsNextTitle": "What is next",
+    "whatsNextText1": "We are growing FreelanceKG into a complete platform: transparent payments, clear moderation and strong community.",
+    "whatsNextText2": "Our goal is to make freelance collaboration in the region as safe and convenient as in global services."
+  },
+  "blogPage": {
+    "title": "Blog",
+    "subtitle": "Materials for clients and freelancers",
+    "readArticle": "Read article",
+    "articles": {
+      "hire": {
+        "title": "How to hire a freelancer without risks",
+        "excerpt": "Practical tips for selecting talent, defining tasks and managing deadlines.",
+        "date": "February 20, 2026"
+      },
+      "escrow": {
+        "title": "Escrow in simple words",
+        "excerpt": "Why payment holding protects both sides and reduces conflicts.",
+        "date": "February 16, 2026"
+      },
+      "profile": {
+        "title": "How freelancers can build a strong profile",
+        "excerpt": "What to add to portfolio, how to describe experience and improve response conversion.",
+        "date": "February 10, 2026"
+      }
+    }
+  },
+  "categoriesPage": {
+    "title": "Categories",
+    "subtitle": "Choose a direction and find the right specialist",
+    "videoEditing": "Video & editing",
+    "viewSpecialists": "View specialists"
+  },
+  "howItWorksPage": {
+    "title": "How FreelanceKG works",
+    "subtitle": "Transparent path from task publication to secure payout",
+    "steps": {
+      "findTitle": "Step 1. Find a specialist",
+      "findText": "Choose category, compare profiles and rates, then create an order with clear scope.",
+      "escrowTitle": "Step 2. Pay into escrow",
+      "escrowText": "Budget is reserved on the platform. Freelancer sees the order is financially confirmed.",
+      "doneTitle": "Step 3. Acceptance and completion",
+      "doneText": "After checking the result, you approve work and funds are transferred to freelancer."
+    }
+  },
+  "helpPage": {
+    "title": "Help",
+    "subtitle": "Frequently asked questions and support channels",
+    "contactSupport": "Contact support",
+    "cards": {
+      "knowledge": {
+        "title": "Knowledge base",
+        "text": "Answers to common questions about orders, payments, disputes and security."
+      },
+      "support": {
+        "title": "Support",
+        "text": "Support team helps with dispute cases and financial operations."
+      },
+      "contacts": {
+        "title": "Contacts",
+        "text": "Reach us via feedback form and get response by email."
+      }
+    }
+  },
+  "faqPage": {
+    "subtitle": "Answers to frequent FreelanceKG user questions"
+  },
+  "faq": {
+    "items": {
+      "escrow": {
+        "question": "How does escrow work on FreelanceKG?",
+        "answer": "Client transfers budget to escrow. Funds are held on platform until result approval. After approval payment is automatically released to freelancer."
+      },
+      "select": {
+        "question": "How to choose a reliable freelancer?",
+        "answer": "Check rating, completed orders, reviews, portfolio and response time. You can also start with a small test task."
+      },
+      "quality": {
+        "question": "What if work quality is poor?",
+        "answer": "Open a dispute on order page and attach evidence. Platform team reviews the case and usually makes decision within 48 hours."
+      },
+      "fees": {
+        "question": "What are platform fees?",
+        "answer": "Order creation is free for clients. Freelancers pay a service fee from successfully completed orders."
+      },
+      "remote": {
+        "question": "Can I work fully remotely?",
+        "answer": "Yes. All steps, including communication, approvals, file transfer and closing deals, are available online."
+      },
+      "support": {
+        "question": "How fast does support respond?",
+        "answer": "Average first response is up to 30 minutes during working hours and up to 2 hours at night."
+      }
+    }
+  },
+  "contactPage": {
+    "title": "Contacts",
+    "subtitle": "Get in touch with FreelanceKG team",
+    "phone": "Phone",
+    "address": "Address",
+    "addressValue": "Bishkek, Kyrgyz Republic",
+    "sent": "Message sent. We will contact you shortly.",
+    "message": "Message",
+    "send": "Send"
+  },
+  "termsPage": {
+    "title": "Terms of use",
+    "subtitle": "Platform usage rules on FreelanceKG",
+    "sections": {
+      "general": {
+        "title": "1. General provisions",
+        "text": "FreelanceKG provides a platform for clients and freelancers to collaborate. By using service, you agree with these terms."
+      },
+      "account": {
+        "title": "2. Registration and account",
+        "text": "User must provide accurate information during registration and must not share account access with third parties."
+      },
+      "orders": {
+        "title": "3. Orders and payments",
+        "text": "The platform provides informational and coordination services. The \"escrow\" mechanism is a security payment to ensure obligations and is not a bank deposit or custody service."
+      },
+      "disputes": {
+        "title": "4. Disputes",
+        "text": "In conflicts, parties must provide materials and correspondence. Platform may decide based on available data."
+      },
+      "liability": {
+        "title": "5. Limitation of liability",
+        "text": "The platform is not a bank, payment institution, or profit guarantor. Platform is not responsible for indirect losses and does not guarantee commercial outcome for any order."
+      }
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "subtitle": "Feed of events for orders, payments and security.",
+    "markAllRead": "Mark all as read",
+    "unread": "Unread",
+    "feed": "Notifications feed",
+    "settings": "Notification settings",
+    "center": "In-app center",
+    "new": "new",
+    "read": "read",
+    "policy": "Notification policy",
+    "policyText": "Critical security notifications are always sent even if some channels are disabled.",
+    "policyHint": "Critical notifications cannot be fully disabled",
+    "channels": {
+      "email": "Email",
+      "push": "Push",
+      "inApp": "In-app"
+    }
+  },
+  "documents": {
+    "title": "Documents & agreements",
+    "subtitle": "Templates for acts, invoices and agreements.",
+    "newDocument": "New document",
+    "download": "Download",
+    "center": "Document center",
+    "versionHistory": "Version history",
+    "emptyTitle": "No documents yet",
+    "emptyDescription": "Create your first act, invoice or agreement template.",
+    "legalTitle": "Legal actions",
+    "legalSubtitle": "Later this section can be connected to e-signature API and legal validation services.",
+    "platformTerms": "Platform terms",
+    "verifySignature": "Verify signature",
+    "table": {
+      "document": "Document"
+    },
+    "status": {
+      "signed": "Signed",
+      "draft": "Draft",
+      "archived": "Archived"
+    }
+  },
+  "resume": {
+    "title": "Resume & career",
+    "subtitle": "Professional profile: experience, education, languages, certifications.",
+    "save": "Save",
+    "saved": "Resume saved",
+    "completeness": "Profile completeness: {{progress}}%",
+    "verifiedSkills": "Verified skills",
+    "professionalBlock": "Professional block",
+    "headline": "Resume headline",
+    "availability": "Availability",
+    "experience": "Describe experience",
+    "educationCerts": "Education & certifications",
+    "education": "Education",
+    "certifications": "Certifications (one per line)",
+    "languages": "Languages (one per line)",
+    "location": "Location",
+    "locationPlaceholder": "City, country",
+    "checklistTitle": "Career checklist",
+    "checklistDone": "OK",
+    "checklistPending": "...",
+    "checklist": {
+      "headline": "Headline has 10+ chars",
+      "experience": "Experience has 20+ chars",
+      "education": "Education provided",
+      "language": "At least 1 language",
+      "certification": "At least 1 certification"
+    }
+  },
+  "oauth": {
+    "finishing": "Completing sign in..."
+  },
+  "notFound": {
+    "code": "Error 404",
+    "title": "Page not found",
+    "subtitle": "Link may be outdated or page moved. Go back to dashboard or homepage.",
+    "dashboard": "Go to dashboard",
+    "home": "Go to homepage"
+  },
+  "sidebar": {
+    "groups": {
+      "orders": "Orders",
+      "finance": "Money",
+      "communication": "Communication",
+      "account": "Account",
+      "navigation": "Navigation"
+    },
+    "items": {
+      "dashboard": "Dashboard",
+      "myOrders": "My orders",
+      "availableOrders": "Available orders",
+      "createOrder": "Create order",
+      "finance": "Finance",
+      "notifications": "Notifications",
+      "messages": "Messages",
+      "myProfile": "My profile",
+      "resume": "Resume",
+      "documents": "Documents",
+      "settings": "Settings"
+    }
+  },
+  "status": {
+    "pending": "Pending",
+    "active": "Active",
+    "submitted": "Submitted",
+    "completed": "Completed",
+    "disputed": "Disputed",
+    "cancelled": "Cancelled"
+  },
+  "topbar": {
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "workspace": "Workspace",
+    "user": "User"
+  }
+}

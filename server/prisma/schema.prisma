@@ -1,0 +1,745 @@
+// FreelanceKG Prisma Schema
+// Production-ready schema for PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum Role {
+  CLIENT
+  FREELANCER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  ACTIVE
+  SUBMITTED
+  COMPLETED
+  DISPUTED
+  CANCELLED
+}
+
+enum EscrowStatus {
+  NONE
+  HOLDING
+  RELEASED
+  DISPUTED
+  REFUNDED
+}
+
+enum DisputeStatus {
+  OPEN
+  IN_REVIEW
+  RESOLVED
+  CLOSED
+}
+
+enum TransactionType {
+  ESCROW_HOLD
+  ESCROW_RELEASE
+  ESCROW_REFUND
+  WITHDRAWAL
+  DEPOSIT
+  FEE
+}
+
+enum TransactionStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum WithdrawalStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  REJECTED
+}
+
+enum PaymentIntentStatus {
+  INITIATED
+  SUCCEEDED
+  FAILED
+  EXPIRED
+}
+
+enum NotificationType {
+  ORDER_CREATED
+  ORDER_ACCEPTED
+  ORDER_SUBMITTED
+  ORDER_COMPLETED
+  ORDER_CANCELLED
+  DISPUTE_OPENED
+  DISPUTE_RESOLVED
+  MESSAGE_RECEIVED
+  PAYMENT_RECEIVED
+  WITHDRAWAL_COMPLETED
+  SYSTEM
+}
+
+enum MilestoneStatus {
+  DRAFT
+  ACTIVE
+  SUBMITTED
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+enum ChangeRequestStatus {
+  OPEN
+  ACCEPTED
+  REJECTED
+  CANCELLED
+}
+
+enum ProposalStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+}
+
+enum SupportCaseStatus {
+  OPEN
+  IN_PROGRESS
+  WAITING_CUSTOMER
+  RESOLVED
+  CLOSED
+}
+
+enum SupportCasePriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum LedgerDirection {
+  DEBIT
+  CREDIT
+}
+
+enum LedgerAccount {
+  ESCROW
+  USER_BALANCE
+  PLATFORM_REVENUE
+  WITHDRAWAL_HOLD
+  WITHDRAWAL_PAID
+  REFUND_RESERVE
+}
+
+enum IdempotencyStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+// ============================================
+// USER MODEL
+// ============================================
+
+model User {
+  id              String    @id @default(uuid())
+  email           String    @unique
+  password        String    // Hashed with bcrypt
+  name            String
+  avatar          String?
+  role            Role      @default(CLIENT)
+  
+  // Email verification
+  isEmailVerified Boolean   @default(false)
+  emailVerifyToken String?
+  emailVerifyExpires DateTime?
+  
+  // Password reset
+  passwordResetToken String?
+  passwordResetExpires DateTime?
+  
+  // OAuth
+  oauthProvider   String?   // 'google' | 'github'
+  oauthId         String?
+  
+  // Security
+  lastLoginAt     DateTime?
+  lastLoginIp     String?
+  failedLoginAttempts Int   @default(0)
+  lockedUntil     DateTime?
+  
+  // Timestamps
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  // Relations
+  freelancerProfile FreelancerProfile?
+  ordersAsClient    Order[]    @relation("ClientOrders")
+  ordersAsFreelancer Order[]   @relation("FreelancerOrders")
+  messagesSent      Message[]
+  reviewsGiven      Review[]   @relation("ReviewsGiven")
+  reviewsReceived   Review[]   @relation("ReviewsReceived")
+  disputesOpened    Dispute[]  @relation("DisputeOpener")
+  transactions      Transaction[]
+  withdrawals       Withdrawal[]
+  notifications     Notification[]
+  sessions          Session[]
+  paymentIntents    PaymentIntent[]
+  proposals         Proposal[]
+  
+  @@index([email])
+  @@index([role])
+  @@index([oauthProvider, oauthId])
+}
+
+// ============================================
+// SESSION MODEL (for JWT invalidation)
+// ============================================
+
+model Session {
+  id          String   @id @default(uuid())
+  userId      String
+  token       String   @unique
+  userAgent   String?
+  ip          String?
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([token])
+  @@index([expiresAt])
+}
+
+// ============================================
+// FREELANCER PROFILE
+// ============================================
+
+model FreelancerProfile {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  
+  // Profile info
+  bio             String?  @db.Text
+  skills          String[]
+  hourlyRate      Decimal  @default(500) @db.Decimal(14, 2)
+  category        String?
+  portfolio       Json?    // Array of portfolio items
+  
+  // Stats
+  rating          Float    @default(0)
+  totalRatings    Int      @default(0)
+  completedOrders Int      @default(0)
+  totalEarnings   Decimal  @default(0) @db.Decimal(14, 2)
+  
+  // Financial
+  balance         Decimal  @default(0) @db.Decimal(14, 2)
+  pendingWithdrawal Decimal @default(0) @db.Decimal(14, 2)
+  
+  // Verification
+  isVerified      Boolean  @default(false)
+  verifiedAt      DateTime?
+  
+  // Availability
+  isAvailable     Boolean  @default(true)
+  responseTime    Int?     // Average response time in hours
+  
+  // Timestamps
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Relations
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([category])
+  @@index([rating])
+  @@index([hourlyRate])
+  @@index([isVerified])
+}
+
+// ============================================
+// ORDER MODEL
+// ============================================
+
+model Order {
+  id              String      @id @default(uuid())
+  clientId        String
+  freelancerId    String?
+  
+  // Order details
+  title           String
+  description     String      @db.Text
+  category        String
+  budget          Decimal    @db.Decimal(14, 2)
+  deadline        DateTime
+  
+  // Status
+  status          OrderStatus @default(PENDING)
+  
+  // Escrow
+  escrowAmount    Decimal     @default(0) @db.Decimal(14, 2)
+  escrowStatus    EscrowStatus @default(NONE)
+  escrowHeldAt    DateTime?
+  escrowReleasedAt DateTime?
+  escrowRefundedAt DateTime?
+  escrowTransactionId String?
+  platformFee     Decimal     @default(0) @db.Decimal(14, 2)
+  netAmount       Decimal     @default(0) @db.Decimal(14, 2)
+  
+  // Submission
+  submittedAt     DateTime?
+  submissionNote  String?     @db.Text
+  submissionFiles String[]
+  
+  // Completion
+  completedAt     DateTime?
+  cancelledAt     DateTime?
+  cancelReason    String?
+  
+  // Timestamps
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  
+  // Relations
+  client          User        @relation("ClientOrders", fields: [clientId], references: [id])
+  freelancer      User?       @relation("FreelancerOrders", fields: [freelancerId], references: [id])
+  messages        Message[]
+  review          Review?
+  dispute         Dispute?
+  transactions    Transaction[]
+  paymentIntents  PaymentIntent[]
+  milestones      Milestone[]
+  changeRequests  ChangeRequest[]
+  proposals       Proposal[]
+  
+  @@index([clientId])
+  @@index([freelancerId])
+  @@index([status])
+  @@index([category])
+  @@index([createdAt])
+}
+
+model Milestone {
+  id           String          @id @default(uuid())
+  orderId       String
+  title         String
+  description   String?         @db.Text
+  amount        Decimal         @db.Decimal(14, 2)
+  dueDate       DateTime
+  status        MilestoneStatus @default(DRAFT)
+  createdById   String
+  submittedAt   DateTime?
+  approvedAt    DateTime?
+  rejectedAt    DateTime?
+  completedAt   DateTime?
+  note          String?         @db.Text
+  metadata      Json?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  order         Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([status])
+  @@index([dueDate])
+}
+
+model ChangeRequest {
+  id              String              @id @default(uuid())
+  orderId          String
+  requestedById    String
+  status           ChangeRequestStatus @default(OPEN)
+  reason           String              @db.Text
+  requestedBudget  Decimal?            @db.Decimal(14, 2)
+  requestedDeadline DateTime?
+  responseNote     String?             @db.Text
+  resolvedById     String?
+  resolvedAt       DateTime?
+  metadata         Json?
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+
+  order            Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([status])
+}
+
+model Proposal {
+  id            String         @id @default(uuid())
+  orderId        String
+  freelancerId   String
+  amount         Decimal        @db.Decimal(14, 2)
+  deliveryDays   Int
+  message        String?        @db.Text
+  status         ProposalStatus @default(PENDING)
+  respondedAt    DateTime?
+  metadata       Json?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  order          Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  freelancer     User           @relation(fields: [freelancerId], references: [id], onDelete: Cascade)
+
+  @@unique([orderId, freelancerId])
+  @@index([orderId, status])
+  @@index([freelancerId, status])
+}
+
+// ============================================
+// MESSAGE MODEL
+// ============================================
+
+model Message {
+  id        String   @id @default(uuid())
+  orderId   String
+  senderId  String
+  
+  content   String   @db.Text
+  fileUrl   String?
+  fileName  String?
+  fileSize  Int?
+  
+  isRead    Boolean  @default(false)
+  readAt    DateTime?
+  
+  createdAt DateTime @default(now())
+  
+  // Relations
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  sender    User     @relation(fields: [senderId], references: [id])
+  
+  @@index([orderId])
+  @@index([senderId])
+  @@index([createdAt])
+}
+
+// ============================================
+// REVIEW MODEL
+// ============================================
+
+model Review {
+  id        String   @id @default(uuid())
+  orderId   String   @unique
+  fromId    String
+  toId      String
+  
+  rating    Int      // 1-5
+  comment   String?  @db.Text
+  
+  // Response from reviewed user
+  response  String?  @db.Text
+  respondedAt DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  from      User     @relation("ReviewsGiven", fields: [fromId], references: [id])
+  to        User     @relation("ReviewsReceived", fields: [toId], references: [id])
+  
+  @@index([fromId])
+  @@index([toId])
+  @@index([rating])
+}
+
+// ============================================
+// DISPUTE MODEL
+// ============================================
+
+model Dispute {
+  id          String        @id @default(uuid())
+  orderId     String        @unique
+  openedById  String
+  
+  reason      String        @db.Text
+  evidence    String[]      // File URLs
+  
+  status      DisputeStatus @default(OPEN)
+  
+  // Resolution
+  resolution  String?       @db.Text
+  resolvedAt  DateTime?
+  resolvedById String?
+  refundAmount Decimal? @db.Decimal(14, 2)
+  
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  
+  // Relations
+  order       Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  openedBy    User          @relation("DisputeOpener", fields: [openedById], references: [id])
+  events      DisputeEvent[]
+  
+  @@index([openedById])
+  @@index([status])
+}
+
+model DisputeEvent {
+  id         String   @id @default(uuid())
+  disputeId  String
+  actorId    String?
+  eventType  String
+  message    String?
+  payload    Json?
+  createdAt  DateTime @default(now())
+
+  dispute    Dispute  @relation(fields: [disputeId], references: [id], onDelete: Cascade)
+
+  @@index([disputeId, createdAt])
+}
+
+// ============================================
+// TRANSACTION MODEL
+// ============================================
+
+model Transaction {
+  id            String            @id @default(uuid())
+  orderId       String?
+  userId        String
+  
+  type          TransactionType
+  amount        Decimal           @db.Decimal(14, 2)
+  fee           Decimal           @default(0) @db.Decimal(14, 2)
+  netAmount     Decimal           @db.Decimal(14, 2)
+  
+  method        String?           // 'card', 'elsom', 'odengi', 'mbank', 'balance'
+  status        TransactionStatus @default(PENDING)
+  
+  transactionId String?           @unique // External transaction ID
+  
+  description   String?
+  metadata      Json?
+  
+  createdAt     DateTime          @default(now())
+  completedAt   DateTime?
+  
+  // Relations
+  order         Order?            @relation(fields: [orderId], references: [id])
+  user          User              @relation(fields: [userId], references: [id])
+  
+  @@index([userId])
+  @@index([orderId])
+  @@index([type])
+  @@index([status])
+  @@index([transactionId])
+}
+
+// ============================================
+// WITHDRAWAL MODEL
+// ============================================
+
+model Withdrawal {
+  id            String           @id @default(uuid())
+  userId        String
+  
+  amount        Decimal          @db.Decimal(14, 2)
+  fee           Decimal          @default(0) @db.Decimal(14, 2)
+  netAmount     Decimal          @db.Decimal(14, 2)
+  
+  method        String           // 'card', 'elsom', 'odengi', 'mbank'
+  details       String           // JSON with payment details
+  
+  status        WithdrawalStatus @default(PENDING)
+  
+  transactionId String?
+  
+  processedAt   DateTime?
+  processedById String?
+  rejectionReason String?
+  
+  createdAt     DateTime         @default(now())
+  
+  // Relations
+  user          User             @relation(fields: [userId], references: [id])
+  
+  @@index([userId])
+  @@index([status])
+}
+
+// ============================================
+// NOTIFICATION MODEL
+// ============================================
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String
+  
+  type      NotificationType
+  title     String
+  message   String
+  link      String?
+  
+  isRead    Boolean          @default(false)
+  readAt    DateTime?
+  
+  metadata  Json?
+  
+  createdAt DateTime         @default(now())
+  
+  // Relations
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([isRead])
+  @@index([createdAt])
+}
+
+model PaymentIntent {
+  id                String             @id @default(uuid())
+  orderId           String
+  clientId          String
+  amount            Decimal            @db.Decimal(14, 2)
+  method            String
+  provider          String
+  status            PaymentIntentStatus @default(INITIATED)
+  idempotencyKey    String             @unique
+  providerPaymentId String?            @unique
+  checkoutUrl       String?
+  errorMessage      String?
+  metadata          Json?
+  confirmedAt       DateTime?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  order             Order              @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  client            User               @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([clientId])
+  @@index([status])
+}
+
+model LedgerEntry {
+  id             String          @id @default(uuid())
+  batchId        String
+  userId         String?
+  orderId        String?
+  account        LedgerAccount
+  direction      LedgerDirection
+  amount         Decimal         @db.Decimal(14, 2)
+  currency       String          @default("KGS")
+  referenceType  String?
+  referenceId    String?
+  description    String?
+  metadata       Json?
+  createdAt      DateTime        @default(now())
+
+  @@index([batchId])
+  @@index([userId, createdAt])
+  @@index([orderId, createdAt])
+  @@index([account, createdAt])
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  action     String
+  actorId    String?
+  actorRole  String?
+  entityType String?
+  entityId   String?
+  ip         String?
+  userAgent  String?
+  requestId  String?
+  details    Json?
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([action, createdAt])
+  @@index([actorId, createdAt])
+  @@index([entityType, entityId])
+}
+
+model SupportCase {
+  id            String              @id @default(uuid())
+  caseNumber    Int                 @default(autoincrement())
+  createdById   String?
+  assignedToId  String?
+  orderId       String?
+  disputeId     String?
+  title         String
+  description   String              @db.Text
+  status        SupportCaseStatus   @default(OPEN)
+  priority      SupportCasePriority @default(MEDIUM)
+  resolution    String?             @db.Text
+  metadata      Json?
+  resolvedAt    DateTime?
+  closedAt      DateTime?
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+
+  @@unique([caseNumber])
+  @@index([status, priority, createdAt])
+  @@index([assignedToId, status])
+  @@index([createdById, createdAt])
+}
+
+model IdempotencyKey {
+  id            String             @id @default(uuid())
+  key           String             @unique
+  scope         String
+  actorId       String?
+  requestHash   String?
+  status        IdempotencyStatus  @default(PENDING)
+  response      Json?
+  errorMessage  String?
+  expiresAt     DateTime?
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  @@index([scope, createdAt])
+  @@index([actorId, createdAt])
+  @@index([expiresAt])
+}
+
+// ============================================
+// CATEGORY MODEL (optional, for admin)
+// ============================================
+
+model Category {
+  id          String   @id @default(uuid())
+  slug        String   @unique
+  name        String
+  nameKy      String?  // Kyrgyz name
+  icon        String?
+  description String?
+  
+  orderCount  Int      @default(0)
+  freelancerCount Int  @default(0)
+  
+  isActive    Boolean  @default(true)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([slug])
+  @@index([isActive])
+}
+
+// ============================================
+// SYSTEM SETTINGS (for admin)
+// ============================================
+
+model SystemSetting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String   @db.Text
+  type      String   @default("string") // string, number, boolean, json
+  
+  updatedAt DateTime @updatedAt
+  updatedBy String?
+  
+  @@index([key])
+}
